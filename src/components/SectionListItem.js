@@ -142,10 +142,25 @@ class SectionListItem extends Component {
 
     return (
       <View style={container}>
-        <Image
+        {/*<Image
           style={thumbnailStyle}
           source={{ uri: this.props.item.imageLinks.thumbnail }}
-        />
+        />*/}
+        {this.props.item.imageLinks ? (
+          <Image
+            style={thumbnailStyle}
+            source={{
+              uri: this.props.item.imageLinks.thumbnail
+            }}
+          />
+        ) : (
+          <Image
+            style={thumbnailStyle}
+            source={{
+              uri: "https://www.tanium.com/lib/imgs/global/icon-x-black.png"
+            }}
+          />
+        )}
         <View style={elementsContainer}>
           <Text style={titleText}>{this.props.item.title}</Text>
           <Text style={authorText}>{this.props.item.authors}</Text>
