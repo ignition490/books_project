@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList } from "react-native";
 import _ from "lodash";
 import FlatListItem from "./FlatListItem";
+import { connect } from "react-redux";
+import { searchBooks, queryUpdate } from "../actions";
 import { SearchBar } from "react-native-elements";
 import * as BooksAPI from "../../BooksAPI";
 class BookSearch extends Component {
@@ -12,16 +14,8 @@ class BookSearch extends Component {
   };
 
   handleSearch = query => {
-    this.setState(
-      { query },
-      _.debounce(
-        () =>
-          BooksAPI.search(this.state.query).then(books =>
-            this.setState({ books })
-          ),
-        0
-      )
-    );
+    this.props.queryUpdate(query);
+    _.debounce(() => this.props.searchBooks(query), 0);
   };
 
   renderSeparator = () => {
@@ -49,31 +43,16 @@ class BookSearch extends Component {
     );
   };
 
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#CED0CE"
-        }}
-      >
-        <ActivityIndicator animating size="large" />
-      </View>
-    );
-  };
-
   render() {
-    const { query } = this.state;
+    console.log(this.props);
+    const { query } = this.props;
 
     return (
       <View style={styles.container}>
-        {JSON.stringify(this.state.books) !==
-        JSON.stringify(this.state.auxiliar) ? (
+        {JSON.stringify(this.props.searchResult) !==
+        JSON.stringify(this.props.auxiliar) ? (
           <FlatList
-            data={this.state.books}
+            data={this.props.searchResult}
             renderItem={({ item, index }) => {
               return (
                 <FlatListItem
@@ -86,7 +65,6 @@ class BookSearch extends Component {
             keyExtractor={(item, index) => item + index}
             ItemSeparatorComponent={this.renderSeparator}
             ListHeaderComponent={this.renderHeader(query)}
-            ListFooterComponent={this.renderFooter}
           />
         ) : (
           <FlatList
@@ -97,7 +75,6 @@ class BookSearch extends Component {
             keyExtractor={(item, index) => item + index}
             ItemSeparatorComponent={this.renderSeparator}
             ListHeaderComponent={this.renderHeader(query)}
-            ListFooterComponent={this.renderFooter}
           />
         )}
       </View>
@@ -114,4 +91,15 @@ const styles = {
   }
 };
 
-export default BookSearch;
+//export default BookSearch;
+
+const mapStateToProps = state => {
+  const { searchResult, query, auxiliar } = state.books;
+
+  return { searchResult, query, auxiliar };
+};
+
+export default connect(
+  mapStateToProps,
+  { searchBooks, queryUpdate }
+)(BookSearch);
