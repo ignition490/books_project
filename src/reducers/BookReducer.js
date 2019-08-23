@@ -1,4 +1,10 @@
-import { BOOKS_UPDATE, SEARCH_BOOKS, QUERY_UPDATE } from "../actions/types";
+import {
+  BOOKS_UPDATE,
+  SEARCH_BOOKS,
+  QUERY_UPDATE,
+  CHANGE_REFRESH_STATE,
+  CHANGE_SHELF
+} from "../actions/types";
 
 const INITIAL_STATE = {
   books: [],
@@ -19,6 +25,18 @@ export default (state = (state = INITIAL_STATE), action) => {
     case QUERY_UPDATE:
       state.query = action.payload;
       return { ...state, query: action.payload };
+    case CHANGE_REFRESH_STATE:
+      state.refresh = action.payload;
+      return { ...state, refresh: action.payload };
+    case CHANGE_SHELF:
+      return {
+        ...state,
+        books: state.books.map(book =>
+          book.id === action.payload.book.id
+            ? { ...book, shelf: action.payload }
+            : book
+        )
+      };
     default:
       return state;
   }

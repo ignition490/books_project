@@ -3,19 +3,33 @@ import { View, FlatList } from "react-native";
 import _ from "lodash";
 import FlatListItem from "./FlatListItem";
 import { connect } from "react-redux";
-import { searchBooks, queryUpdate } from "../actions";
+import {
+  searchBooks,
+  queryUpdate,
+  changeRefreshState,
+  changeShelf
+} from "../actions";
 import { SearchBar } from "react-native-elements";
 import * as BooksAPI from "../../BooksAPI";
 class BookSearch extends Component {
-  state = {
-    books: [],
-    auxiliar: { error: "empty query", items: [] },
-    query: ""
+  handleStateChange = (book, shelf) => {
+    this.props.searchResult.map(item => {
+      if (item.id === book.id) {
+        this.props.changeRefreshState(1);
+        this.props.changeShelf(book, shelf);
+      }
+    });
+    if (!this.props.refresh) {
+      book.shelf = shelf;
+      return { books: [...state.books, book] };
+    } else {
+      this.props.changeRefreshState(0);
+    }
   };
 
   handleSearch = query => {
     this.props.queryUpdate(query);
-    _.debounce(() => this.props.searchBooks(query), 0);
+    this.props.searchBooks(query);
   };
 
   renderSeparator = () => {
@@ -44,7 +58,6 @@ class BookSearch extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { query } = this.props;
 
     return (
@@ -58,7 +71,7 @@ class BookSearch extends Component {
                 <FlatListItem
                   item={item}
                   index={index}
-                  handleStateChange={this.props.handleStateChange}
+                  handleStateChange={this.handleStateChange}
                 />
               );
             }}
@@ -91,15 +104,13 @@ const styles = {
   }
 };
 
-//export default BookSearch;
-
 const mapStateToProps = state => {
-  const { searchResult, query, auxiliar } = state.books;
+  const { books, searchResult, query, auxiliar } = state.books;
 
-  return { searchResult, query, auxiliar };
+  return { books, searchResult, query, auxiliar };
 };
 
 export default connect(
   mapStateToProps,
-  { searchBooks, queryUpdate }
+  { searchBooks, queryUpdate, changeRefreshState, changeShelf }
 )(BookSearch);

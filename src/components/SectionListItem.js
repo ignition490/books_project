@@ -253,4 +253,13 @@ class SectionListItem extends Component {
   }
 }
 
-export default SectionListItem;
+const mapStateToProps = state => {
+  const { books, searchResult, query, auxiliar } = state.books;
+
+  return { books, searchResult, query, auxiliar };
+};
+
+export default connect(
+  mapStateToProps,
+  { searchBooks, queryUpdate, changeRefreshState, changeShelf }
+)(SectionListItem);

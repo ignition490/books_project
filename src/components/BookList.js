@@ -8,61 +8,13 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import SectionListItem from "./SectionListItem";
 import { connect } from "react-redux";
-//import * as BooksAPI from "../../BooksAPI";
 import { booksUpdate } from "../actions";
 import { Actions } from "react-native-router-flux";
 import { Header } from "./common";
 
 class BookList extends Component {
-  constructor() {
-    super();
-    this.state = {
-      books: [],
-      refresh: 0
-    };
-    this.handleStateChange = this.handleStateChange.bind(this);
-    //this.refreshState = this.refreshState.bind(this);
-  }
-
-  handleStateChange(book, shelf) {
-    this.setState(state => {
-      const books = state.books.map(item => {
-        if (item.id === book.id) {
-          this.state.refresh = 1;
-          return {
-            ...item,
-            shelf
-          };
-        } else {
-          return item;
-        }
-      });
-      if (!this.state.refresh) {
-        book.shelf = shelf;
-        return { books: [...state.books, book] };
-      } else {
-        return {
-          books,
-          refresh: 0
-        };
-      }
-    });
-  }
-
-  /*refreshState() {
-    console.log(this.state.refresh);
-    this.setState(state => {
-      if (state.refresh) {
-        return { refresh: 0 };
-      } else {
-        return { refresh: 1 };
-      }
-    });
-  }*/
-
   componentDidMount() {
     this.props.booksUpdate({});
-    //BooksAPI.getAll().then(response => this.setState({ books: response }));
   }
 
   dividingWeConquer() {
@@ -124,9 +76,7 @@ class BookList extends Component {
         />
         <TouchableWithoutFeedback
           onPress={() => {
-            Actions.bookSearch(/*{
-              handleStateChange: this.handleStateChange
-            }*/);
+            Actions.bookSearch({});
           }}
         >
           <View style={[styles.button, styles.search]}>

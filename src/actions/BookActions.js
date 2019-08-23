@@ -1,7 +1,13 @@
 import { Actions } from "react-native-router-flux";
 import * as BooksAPI from "../../BooksAPI";
 import _ from "lodash";
-import { BOOKS_UPDATE, SEARCH_BOOKS, QUERY_UPDATE } from "./types";
+import {
+  BOOKS_UPDATE,
+  SEARCH_BOOKS,
+  QUERY_UPDATE,
+  CHANGE_REFRESH_STATE,
+  CHANGE_SHELF
+} from "./types";
 
 export const booksUpdate = ({}) => {
   return dispatch => {
@@ -22,5 +28,17 @@ export const searchBooks = query => {
     BooksAPI.search(query).then(books => {
       dispatch({ type: SEARCH_BOOKS, payload: books });
     });
+  };
+};
+
+export const changeRefreshState = state => {
+  return dispatch => {
+    dispatch({ type: CHANGE_REFRESH_STATE, payload: state });
+  };
+};
+
+export const changeShelf = (book, shelf) => {
+  return dispatch => {
+    dispatch({ type: CHANGE_SHELF, payload: { book, shelf } });
   };
 };
