@@ -8,7 +8,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import SectionListItem from "./SectionListItem";
 import { connect } from "react-redux";
-import { booksUpdate } from "../actions";
+import { booksUpdate, changeShelf } from "../actions";
 import { Actions } from "react-native-router-flux";
 import { Header } from "./common";
 
@@ -16,6 +16,14 @@ class BookList extends Component {
   componentDidMount() {
     this.props.booksUpdate({});
   }
+
+  handleStateChange = (book, shelf) => {
+    this.props.books.map(item => {
+      if (item.id === book.id) {
+        this.props.changeShelf(book, shelf);
+      }
+    });
+  };
 
   dividingWeConquer() {
     this.shelfs.currentlyReading = [];
@@ -119,5 +127,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { booksUpdate }
+  { booksUpdate, changeShelf }
 )(BookList);

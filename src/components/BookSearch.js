@@ -7,10 +7,11 @@ import {
   searchBooks,
   queryUpdate,
   changeRefreshState,
-  changeShelf
+  changeShelf,
+  addBooks
 } from "../actions";
 import { SearchBar } from "react-native-elements";
-import * as BooksAPI from "../../BooksAPI";
+
 class BookSearch extends Component {
   handleStateChange = (book, shelf) => {
     this.props.searchResult.map(item => {
@@ -20,8 +21,7 @@ class BookSearch extends Component {
       }
     });
     if (!this.props.refresh) {
-      book.shelf = shelf;
-      return { books: [...state.books, book] };
+      this.props.addBooks(book, shelf);
     } else {
       this.props.changeRefreshState(0);
     }
@@ -112,5 +112,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { searchBooks, queryUpdate, changeRefreshState, changeShelf }
+  { searchBooks, queryUpdate, changeRefreshState, changeShelf, addBooks }
 )(BookSearch);

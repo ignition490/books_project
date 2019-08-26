@@ -7,6 +7,8 @@ import {
   Image
 } from "react-native";
 //import { ShelfButton } from "./common";
+import { handleStateChange } from "../actions";
+import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as BooksAPI from "../../BooksAPI";
 
@@ -142,10 +144,6 @@ class SectionListItem extends Component {
 
     return (
       <View style={container}>
-        {/*<Image
-          style={thumbnailStyle}
-          source={{ uri: this.props.item.imageLinks.thumbnail }}
-        />*/}
         {this.props.item.imageLinks ? (
           <Image
             style={thumbnailStyle}
@@ -261,5 +259,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { searchBooks, queryUpdate, changeRefreshState, changeShelf }
+  { handleStateChange }
 )(SectionListItem);

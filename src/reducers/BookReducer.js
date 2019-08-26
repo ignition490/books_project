@@ -3,7 +3,8 @@ import {
   SEARCH_BOOKS,
   QUERY_UPDATE,
   CHANGE_REFRESH_STATE,
-  CHANGE_SHELF
+  CHANGE_SHELF,
+  ADD_BOOKS
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -33,7 +34,16 @@ export default (state = (state = INITIAL_STATE), action) => {
         ...state,
         books: state.books.map(book =>
           book.id === action.payload.book.id
-            ? { ...book, shelf: action.payload }
+            ? { ...book, shelf: action.payload.shelf }
+            : book
+        )
+      };
+    case ADD_BOOKS:
+      return {
+        ...state,
+        books: state.searchResult.map(book =>
+          book.id === action.payload.book.id
+            ? { ...book, shelf: action.payload.shelf }
             : book
         )
       };

@@ -6,7 +6,8 @@ import {
   SEARCH_BOOKS,
   QUERY_UPDATE,
   CHANGE_REFRESH_STATE,
-  CHANGE_SHELF
+  CHANGE_SHELF,
+  ADD_BOOKS
 } from "./types";
 
 export const booksUpdate = ({}) => {
@@ -40,5 +41,11 @@ export const changeRefreshState = state => {
 export const changeShelf = (book, shelf) => {
   return dispatch => {
     dispatch({ type: CHANGE_SHELF, payload: { book, shelf } });
+  };
+};
+
+export const addBooks = (book, shelf) => {
+  return dispatch => {
+    dispatch({ type: ADD_BOOKS, payload: { book, shelf } });
   };
 };
