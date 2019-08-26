@@ -42,9 +42,6 @@ class FlatListItem extends Component {
       other: {
         backgroundColor: "#FFF"
       },
-      blocked: {
-        backgroundColor: "#B22222"
-      },
       thumbnailStyle: {
         height: 100,
         width: 80
@@ -82,8 +79,7 @@ class FlatListItem extends Component {
       authorText,
       readStyle,
       wantToReadStyle,
-      currentlyReadingStyle,
-      blocked
+      currentlyReadingStyle
     } = styles;
 
     const book = {};

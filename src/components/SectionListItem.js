@@ -173,13 +173,6 @@ class SectionListItem extends Component {
               <Icon name="ban" size={20} color="#B22222" />
             </Animated.View>
           </TouchableWithoutFeedback>
-          {/*<ShelfButton
-            id={this.props.item.id}
-            shelf={this.props.item.shelf}
-            currentShelf={"currentlyReading"}
-            animation={this.state.animation}
-            handleStateChange={this.props.handleStateChange}
-          />*/}
           {this.props.item.shelf != "currentlyReading" ? (
             <TouchableWithoutFeedback
               onPress={() => {

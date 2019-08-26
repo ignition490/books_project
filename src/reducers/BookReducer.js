@@ -41,10 +41,12 @@ export default (state = (state = INITIAL_STATE), action) => {
     case ADD_BOOKS:
       return {
         ...state,
-        books: state.searchResult.map(book =>
-          book.id === action.payload.book.id
-            ? { ...book, shelf: action.payload.shelf }
-            : book
+        books: state.books.concat(
+          state.searchResult.map(book =>
+            book.id === action.payload.book.id
+              ? { ...book, shelf: action.payload.shelf }
+              : book
+          )
         )
       };
     default:

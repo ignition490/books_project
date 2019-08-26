@@ -62,34 +62,26 @@ class BookSearch extends Component {
 
     return (
       <View style={styles.container}>
-        {JSON.stringify(this.props.searchResult) !==
-        JSON.stringify(this.props.auxiliar) ? (
-          <FlatList
-            data={this.props.searchResult}
-            renderItem={({ item, index }) => {
-              return (
-                <FlatListItem
-                  item={item}
-                  index={index}
-                  handleStateChange={this.handleStateChange}
-                />
-              );
-            }}
-            keyExtractor={(item, index) => item + index}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader(query)}
-          />
-        ) : (
-          <FlatList
-            data={[]}
-            renderItem={({ item, index }) => {
-              return <FlatListItem item={item} index={index} />;
-            }}
-            keyExtractor={(item, index) => item + index}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader(query)}
-          />
-        )}
+        <FlatList
+          data={
+            JSON.stringify(this.props.searchResult) !==
+            JSON.stringify(this.props.auxiliar)
+              ? this.props.searchResult
+              : []
+          }
+          renderItem={({ item, index }) => {
+            return (
+              <FlatListItem
+                item={item}
+                index={index}
+                handleStateChange={this.handleStateChange}
+              />
+            );
+          }}
+          keyExtractor={(item, index) => item + index}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent={this.renderHeader(query)}
+        />
       </View>
     );
   }
