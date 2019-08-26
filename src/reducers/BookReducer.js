@@ -2,7 +2,6 @@ import {
   BOOKS_UPDATE,
   SEARCH_BOOKS,
   QUERY_UPDATE,
-  CHANGE_REFRESH_STATE,
   CHANGE_SHELF,
   ADD_BOOKS
 } from "../actions/types";
@@ -26,9 +25,6 @@ export default (state = (state = INITIAL_STATE), action) => {
     case QUERY_UPDATE:
       state.query = action.payload;
       return { ...state, query: action.payload };
-    case CHANGE_REFRESH_STATE:
-      state.refresh = action.payload;
-      return { ...state, refresh: action.payload };
     case CHANGE_SHELF:
       return {
         ...state,

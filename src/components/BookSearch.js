@@ -3,27 +3,20 @@ import { View, FlatList } from "react-native";
 import _ from "lodash";
 import FlatListItem from "./FlatListItem";
 import { connect } from "react-redux";
-import {
-  searchBooks,
-  queryUpdate,
-  changeRefreshState,
-  changeShelf,
-  addBooks
-} from "../actions";
+import { searchBooks, queryUpdate, changeShelf, addBooks } from "../actions";
 import { SearchBar } from "react-native-elements";
 
 class BookSearch extends Component {
   handleStateChange = (book, shelf) => {
-    this.props.searchResult.map(item => {
+    var aux = 0;
+    this.props.books.map(item => {
       if (item.id === book.id) {
-        this.props.changeRefreshState(1);
+        aux = 1;
         this.props.changeShelf(book, shelf);
       }
     });
-    if (!this.props.refresh) {
+    if (!aux) {
       this.props.addBooks(book, shelf);
-    } else {
-      this.props.changeRefreshState(0);
     }
   };
 
@@ -97,12 +90,12 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  const { books, searchResult, query, auxiliar } = state.books;
+  const { books, searchResult, query, auxiliar, refresh } = state.books;
 
-  return { books, searchResult, query, auxiliar };
+  return { books, searchResult, query, auxiliar, refresh };
 };
 
 export default connect(
   mapStateToProps,
-  { searchBooks, queryUpdate, changeRefreshState, changeShelf, addBooks }
+  { searchBooks, queryUpdate, changeShelf, addBooks }
 )(BookSearch);

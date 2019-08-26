@@ -36,9 +36,6 @@ class FlatListItem extends Component {
         position: "absolute",
         top: 70
       },
-      option: {
-        backgroundColor: "#00B15E"
-      },
       other: {
         backgroundColor: "#FFF"
       },
@@ -81,8 +78,6 @@ class FlatListItem extends Component {
       wantToReadStyle,
       currentlyReadingStyle
     } = styles;
-
-    const book = {};
 
     return (
       <View style={container}>

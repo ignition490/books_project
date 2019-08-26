@@ -6,9 +6,6 @@ import {
   Animated,
   Image
 } from "react-native";
-//import { ShelfButton } from "./common";
-import { handleStateChange } from "../actions";
-import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as BooksAPI from "../../BooksAPI";
 
@@ -244,13 +241,4 @@ class SectionListItem extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { books, searchResult, query, auxiliar } = state.books;
-
-  return { books, searchResult, query, auxiliar };
-};
-
-export default connect(
-  mapStateToProps,
-  { handleStateChange }
-)(SectionListItem);
+export default SectionListItem;

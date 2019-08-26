@@ -4,7 +4,6 @@ import {
   BOOKS_UPDATE,
   SEARCH_BOOKS,
   QUERY_UPDATE,
-  CHANGE_REFRESH_STATE,
   CHANGE_SHELF,
   ADD_BOOKS
 } from "./types";
@@ -28,12 +27,6 @@ export const searchBooks = query => {
     BooksAPI.search(query).then(books => {
       dispatch({ type: SEARCH_BOOKS, payload: books });
     });
-  };
-};
-
-export const changeRefreshState = state => {
-  return dispatch => {
-    dispatch({ type: CHANGE_REFRESH_STATE, payload: state });
   };
 };
 
