@@ -7,6 +7,7 @@ import {
   Image
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+//import _ from "lodash";
 import * as BooksAPI from "../../BooksAPI";
 
 class SectionListItem extends Component {
@@ -58,6 +59,9 @@ class SectionListItem extends Component {
       other: {
         backgroundColor: "#FFF"
       },
+      bugColor: {
+        backgroundColor: "#E9E9EF"
+      },
       blocked: {
         backgroundColor: "#B22222"
       },
@@ -76,6 +80,17 @@ class SectionListItem extends Component {
         marginLeft: 20,
         marginRight: 10,
         color: "gray"
+      },
+      bugStyle: {
+        transform: [
+          { scale: this.state.animation },
+          {
+            translateX: this.state.animation.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, 225]
+            })
+          }
+        ]
       },
       clearStyle: {
         transform: [
@@ -129,6 +144,7 @@ class SectionListItem extends Component {
       button,
       option,
       other,
+      bugColor,
       thumbnailStyle,
       titleText,
       authorText,
@@ -136,6 +152,7 @@ class SectionListItem extends Component {
       wantToReadStyle,
       currentlyReadingStyle,
       clearStyle,
+      bugStyle,
       blocked
     } = styles;
 
@@ -158,18 +175,7 @@ class SectionListItem extends Component {
         )}
         <View style={elementsContainer}>
           <Text style={titleText}>{this.props.item.title}</Text>
-          <Text style={authorText}>{this.props.item.authors}</Text>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              this.toggleOpen();
-              BooksAPI.moveToShelf(this.props.item.id, " ");
-              this.props.handleStateChange(this.props.item, " ");
-            }}
-          >
-            <Animated.View style={[button, other, clearStyle]}>
-              <Icon name="ban" size={20} color="#B22222" />
-            </Animated.View>
-          </TouchableWithoutFeedback>
+          <Text style={authorText}>{this.props.item.authors.join(", ")}</Text>
           {this.props.item.shelf != "currentlyReading" ? (
             <TouchableWithoutFeedback
               onPress={() => {
@@ -230,6 +236,20 @@ class SectionListItem extends Component {
               </Animated.View>
             </TouchableWithoutFeedback>
           )}
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.toggleOpen();
+              BooksAPI.moveToShelf(this.props.item.id, " ");
+              this.props.handleStateChange(this.props.item, " ");
+            }}
+          >
+            <Animated.View style={[button, other, clearStyle]}>
+              <Icon name="ban" size={20} color="#B22222" />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback disabled>
+            <Animated.View style={[button, bugColor, bugStyle]} />
+          </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={this.toggleOpen}>
             <View style={[button, option]}>
               <Icon name="caret-down" size={15} color="#FFF" />
