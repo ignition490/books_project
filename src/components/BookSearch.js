@@ -22,9 +22,10 @@ class BookSearch extends Component {
 
   handleSearch = query => {
     this.props.queryUpdate(query);
-    this.props.searchBooks(query);
-    //_.debounce(() => this.props.searchBooks(query), 0);
+    this.searchBooks(query);
   };
+
+  searchBooks = _.debounce(query => this.props.searchBooks(query), 1000);
 
   renderSeparator = () => {
     return (
